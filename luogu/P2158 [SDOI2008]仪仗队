@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 1e3+5;
+
+int main(){
+    ios::sync_with_stdio(false);
+    ll n;
+    cin >> n;
+    int tem;
+    ll ans = 0,num =0;
+    if(n==1){
+    	cout << 0;
+    	return 0;
+    }
+    for(int j = 1;j<=n-1;++j){
+    	tem =j;
+    	num = j;
+    	for(int i = 2;i*i<=tem;++i){
+    	if(tem%i==0){
+    		num = num*(i-1)/i;
+    	while(tem%i==0)tem/=i;
+        }
+    }
+    if(tem>1)num = num *(tem-1)/tem;
+    ans+=num;
+    }
+    ans*=2;
+    ans+=1;
+    cout << ans;
+    
+    return 0;
+}
