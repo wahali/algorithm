@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 5e3+5;
+bool is_p(int x){
+	if(x==2)return true;
+	else if(x%2==0)return false;
+	for(int i = 3;i*i<=x;++i){
+		if(x%i==0)return false;
+	}
+	return true;
+}
+
+int work(int x){
+	int MAX,MIN;
+	for(int i = x+1;i<= 1299709;++i){
+		if(is_p(i)){
+			MAX = i;
+			break;
+		}
+	}
+	for(int i = x-1;i>=2;--i){
+		if(is_p(i)){
+			MIN = i;
+			break;
+		}
+	}
+	cout << MAX-MIN ;
+}
+
+
+int main(){
+	int n;
+	cin >> n;
+	if(is_p(n))cout << 0;
+	else work(n);
+	return 0;
+}
