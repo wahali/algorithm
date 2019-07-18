@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 1e6+5;
+
+int  MAX[MAXN],MIN[MAXN];
+int maxl = 1,maxr =0,minl =1 ,minr = 0;
+int p[MAXN],q[MAXN];
+int a[MAXN];
+int ans1[MAXN];
+int ans2[MAXN];
+
+int main(){
+	int n,k;
+	cin >> n >> k;
+	for(int i = 1;i<=n;++i)cin >> a[i];
+	for(int i = 1;i<=n;++i){
+		while(maxl<=maxr&&MAX[maxr]<=a[i])maxr--;
+		while(minl<=minr&&MIN[minr]>=a[i])minr--;
+		MAX[++maxr] = a[i];
+		p[maxr] = i;
+		MIN[++minr] = a[i];
+		q[minr] = i;
+		while(k<i-p[maxl]+1)maxl++;
+		while(k<i-q[minl]+1)minl++;
+		if(i>=k){
+			ans1[i-k+1] = MAX[maxl];
+			ans2[i-k+1]  =MIN[minl];
+		}
+		//cout << MAX[maxl] << " " <<MIN[minl] << endl;
+	}
+	for(int i = 1;i<=n-k+1;++i){
+		cout << ans2[i] << " ";
+	}
+	cout << endl;
+	for(int i = 1;i<=n-k+1;++i){
+		cout << ans1[i] << " ";
+	}
+	return 0;
+}
