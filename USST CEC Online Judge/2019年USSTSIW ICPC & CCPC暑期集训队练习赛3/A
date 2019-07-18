@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+stack<ll> p;
+
+
+int main(){
+	ios::sync_with_stdio(false);
+	char ch;
+	ll tem=0;
+	while(cin >> ch){
+		if(ch=='@')break;
+		if(ch>='0'&&ch<='9'){
+			tem = tem*10+ch-'0';
+		}
+		else if(ch=='.'){
+			p.push(tem);
+			tem = 0;
+		}
+		else {
+			//cout << 1 << endl;
+		//cout << 2 << endl;
+				ll a,b;
+				a = p.top();p.pop();
+				b = p.top();p.pop();
+				//cout << a << " " << b <<endl;
+				if(ch=='+'){
+					p.push(a+b);
+				}
+				else if(ch=='-'){
+					p.push(b-a);
+				}
+				else if(ch=='*'){
+					p.push(a*b);
+				}
+				else if(ch=='/'){
+					p.push(b/a);
+				}
+				
+			}
+		}
+
+	ll ans = p.top();
+	cout << ans;
+	return 0;
+}
