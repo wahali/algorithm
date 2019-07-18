@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 2e3+5;
+map<ll,int> p;
+int b[MAXN];
+
+int main(){
+	ios::sync_with_stdio(false);
+	int n,m,tem;
+	cin >> n >> m;
+	for(int i =0;i<n;++i){
+		cin >> tem;
+		p[tem] =1;
+	}
+	for(int i =0;i<m;++i)cin >> b[i];
+	for(int i =0;i<1e9;++i){
+		int flag = 0;
+		for(int j =0;j<m;++j){
+			if(p[b[j]+i]==1){
+				flag = 1;
+				break;
+			}
+		}
+		if(flag == 0){
+			cout << i ;
+			return 0;
+		}
+	}
+	return 0;
+}
