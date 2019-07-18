@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const ll MAXN = 1e3+5;
+int a[MAXN];
+
+int main(){
+    ios::sync_with_stdio(false);
+    int n;
+    cin >> n;
+    int l =0,r =0;
+    for(int i = 1;i<=n;++i)cin >> a[i];
+    for(int i =1;i<=n;++i){
+    	if(a[i]!=i){
+    		l = i;
+    		break;
+		}
+	}
+	for(int i = n;i>=1;--i){
+		if(a[i]!=i){
+			r = i;
+			break;
+		}
+	}
+	if(l==0&&r==0){
+		cout << 0 << " " << 0;
+		return 0;
+	}
+	if(l==0||r==0){
+		cout << "No";
+		return 0;
+	}
+	//cout << l << " " <<r << endl;
+	int ll = l,rr = r;
+	while(ll<=rr){
+		swap(a[ll++],a[rr--]);
+	}
+	/*
+	for(int i = 1;i<=n;++i){
+		cout << a[i] << ' ';
+	}
+	*/
+	int flag = 0;
+	for(int i = l;i<=r;++i){
+		if(a[i]!=i){
+			flag = 1;
+			break;
+		}
+	}
+	if(flag == 1){
+		cout << "No";
+		return 0;
+	}
+	cout << l << " " << r;
+    return 0;
+}
