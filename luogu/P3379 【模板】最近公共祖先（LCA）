@@ -1,0 +1,68 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll; 
+
+const int MAXN = 5e5+10;
+int edge[2*MAXN],next[2*MAXN],head[MAXN],ver[2*MAXN]; 
+int f[MAXN][20],d[MAXN],dist[MAXN];
+int  t,tot = 0;
+queue<int> p;
+int n,m,s;
+int lg[MAXN];
+
+
+void add(int x,int y,int z){
+    ver[++tot] = y;edge[tot] = z;
+    next[tot] = head[x];head[x] = tot;
+}
+
+void bfs(){
+    p.push(s),d[s] = 1 ;
+    while(p.size()){
+        int x = p.front();p.pop();
+        for(int i = head[x]; i;i = next[i]){
+            int y = ver[i];
+            if(d[y])continue;
+            d[y] = d[x] + 1;
+            //dist[y] = dist[x] + edge[y];
+            f[y][0] = x;
+            for(int j = 1;j <= lg[d[y]];++j)
+                f[y][j] = f[f[y][j-1]][j-1];
+            p.push(y);
+        }
+    }
+}
+
+int lca(int x,int y){
+    if(d[x]>d[y])swap(x,y);
+    while(d[x]!=d[y]){
+    	y = f[y][lg[d[y]-d[x]]];
+    }
+    if(x==y)return x;
+    for(int i = t;i>=0;--i)
+        if(f[x][i]!=f[y][i])x = f[x][i],y = f[y][i];
+    return f[x][0];
+}
+
+
+int main(){
+    int a,b;
+    ios::sync_with_stdio(false);
+    memset(d,0,sizeof(d));
+    lg[0] = -1;
+    for(int i =1;i<MAXN;++i)lg[i] = lg[i>>1] + 1; 
+    cin >> n >> m >> s;
+    t = (int) (log(n) / log(2)) + 1;
+    tot = 0;
+    for(int i = 0;i<n-1;++i){
+        cin >> a >> b;
+        add(a,b,1);
+        add(b,a,1);
+    }
+    bfs();
+    for(int i =0;i<m;++i){
+        cin >> a >> b;
+        cout << lca(a,b) << endl ;
+    }
+    return 0;
+}
