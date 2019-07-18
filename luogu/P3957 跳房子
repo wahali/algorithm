@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const ll MAXN = 5e5+5;
+ll n,d,k,x[MAXN],s[MAXN];
+ll m[MAXN],q[MAXN],dp[MAXN];
+inline ll max(ll a,ll b){
+    return a>b?a:b;
+}
+
+int MAX(int mid){
+    int len = d+mid ,MIN = max(1,d-mid);
+    int l = 0,r = -1;       //清空单调队列
+    m[r] =0;q[r] =0;
+    memset(dp,0xc0,sizeof(dp));
+    dp[0] = 0;
+    int cnt =0; 
+    for(int i =1;i<=n;++i){
+        while(l<=r&&x[i]-len>x[m[l]])l++;
+        while(cnt<=n&&x[cnt]<x[i]-len)cnt++;
+        while(cnt<=n&&x[cnt]<=x[i]-MIN){
+            //cout << "sgs" << endl;
+            while(cnt<=n&&l<=r&&dp[m[r]]<=dp[cnt])r--;
+            m[++r] =cnt++;
+        }
+        /*
+        for(int j = l;j<=r;++j){
+            cout << m[j] << " " << dp[m[j]] << endl;
+        }
+        */
+        if(l<=r)dp[i] = dp[m[l]]+s[i];
+        if(dp[i]>=k)return true;
+    }
+        return false;
+}
+
+signed  main(){
+    ios::sync_with_stdio(false);
+    cin >> n >> d >> k;
+    ll num =0;
+    for(int i = 1;i<=n;++i){
+        cin >> x[i] >> s[i];
+        if(s[i]>0)num+=s[i];
+    }
+    x[0] = 0,s[0] =0;
+    if(num<k){
+        cout << -1;
+        return 0;
+    }
+    int l = 0,r = x[n];int mid;
+    while(l<r){
+        //cout << endl;
+        //cout << l << " " << r <<endl;
+        mid = (l+r)/2;
+        if(MAX(mid))r = mid;
+        else l = mid+1;
+    }
+    cout << l;
+    return 0;
+}
