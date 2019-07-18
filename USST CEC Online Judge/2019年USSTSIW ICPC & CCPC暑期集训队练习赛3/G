@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 2e5 + 5;
+int n,m,c,d,e,u,v,w;
+int tot =0;
+int head[MAXN],ver[5*MAXN],nx[5*MAXN],_edge[MAXN],vis[MAXN];
+queue<int> p;
+void add(int x,int y,int val){
+	ver[++tot] = y;_edge[tot] = val;
+	nx[tot] = head[x];head[x] = tot;
+}
+
+int bfs(int x,int t){
+	memset(vis,0,sizeof(vis));
+	while(!p.empty())p.pop();
+	vis[x] = 0;
+	p.push(x);
+	while(!p.empty()){
+		int tem = p.front();p.pop();
+		for(int i = head[tem];i;i = nx[i]){
+			int y = ver[i];
+			if(!vis[y]&&_edge[i]<=t*d){
+				vis[y] = vis[tem]+1;
+				p.push(y);
+			}
+		} 
+	}
+}
+
+int main(){
+	ios::sync_with_stdio(false);
+	cin >> n >> m;
+	cin >> c >> d >> e;
+	for(int i = 0;i < m;++i){
+		cin >> u >> v >> w;
+		add(u,v,w);
+		add(v,u,w);
+	}
+	int l = 1,r = 1e4;
+	while(r!=l){
+		int mid = (l+r)/2;
+		bfs(1,mid);
+		//cout << vis[n] << endl;
+		if(vis[n]!=0&&vis[n]<=mid*e) r = mid;
+		else l = mid+1;
+	}
+	cout << c*l ;
+	return 0;
+}
