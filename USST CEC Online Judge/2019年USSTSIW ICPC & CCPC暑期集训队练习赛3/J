@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 5e3+5;
+int num[MAXN];
+
+int main(){
+	string str;
+	cin >> str;
+	for(int i = 0;i<str.length();++i){
+	if(str[i]=='Q')num[i+1] = num[i]+1;
+	else num[i+1] = num[i];
+	}
+	//for(int i =0;i<=str.length();++i)cout << num[i] << " ";
+	ll ans =0;
+	for(int i = 2;i<str.length()-2;++i){
+		if(str[i]=='A'){
+			ans+=num[i-1]*(num[str.length()]-num[i+2]);
+		}
+	}
+	cout << ans;
+	return 0;
+}
