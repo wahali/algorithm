@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 1e6+5;
+
+int tr[MAXN][2];
+int dep[MAXN];
+int cnt[MAXN];
+int num =0;
+int ans =0;
+void _insert(string a){
+	int tem =0;
+	for(int i = 0;i<a.length();++i){
+		if(tr[tem][a[i]]==0){
+			tr[tem][a[i]]=++num;
+			tem = num;
+			dep[tem] = i+1;
+			cnt[tem]++;
+			ans = max(ans,dep[tem]*cnt[tem]);
+		}
+		else {
+		 	tem = tr[tem][a[i]];
+			cnt[tem]++;
+			ans = max(ans,cnt[tem]*dep[tem]);
+		}
+	}
+}
+int main(){
+	ios::sync_with_stdio(false);
+	int n;
+	cin >> n;
+	string str;
+	for(int i = 0;i<n;++i){
+		cin >> str;
+		_insert(str);
+	}
+	cout << ans;
+	return 0;
+}
