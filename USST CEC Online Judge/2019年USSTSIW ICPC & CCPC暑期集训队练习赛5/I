@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 1e5 + 5;
+int tr[MAXN*20][2],a[MAXN],tot = 1;
+ll ans = 0;
+void _insert(int x){
+	int p =1;
+	int t;
+	for(int i = 31;i>=0;--i){
+		t = (x>>i)&1;
+		//cout << t << endl;
+		if(tr[p][t]==0)tr[p][t] = ++tot;
+		p = tr[p][t];
+	}
+}
+void _search(int x){
+	int p =1;
+	int t;
+	for(int i = 31;i>=0;--i){
+		t = (x>>i)&1;
+		if(tr[p][t]!=0){
+			cout << t;
+			 p= tr[p][t];
+		}
+	}
+	//cout << endl;
+}
+
+void work(int x){
+	ll t,p = 1;
+	ll tem = 0;
+	for(int i = 31;i>=0;--i){
+		//cout << tem << endl;
+		tem <<= 1;
+		t = !((x>>i)&1);
+		//cout << t << endl;
+		if(tr[p][t]!=0){
+			tem++;
+			p = tr[p][t];
+		}
+		else {
+			p = tr[p][!t];
+		}
+	}
+	if(tem>ans){
+		ans = tem;
+		//cout << x << " " << ans << endl;
+	}
+	return ;
+}
+
+
+int main(){
+	int n;
+	cin >> n;
+	for(int i = 1;i<=n;++i)cin >> a[i],_insert(a[i]);
+	//cout << tr[1][1] << endl;
+	//cout << endl;
+	//cout << tot << endl;
+	for(int i = 1;i <= n;++i)work(a[i]);
+	cout << ans;
+	return 0;
+}
