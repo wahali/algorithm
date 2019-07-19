@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const ll MAXN = 1e5 + 5;
+const int MOD = 1000000007;
+ll ord[MAXN],l[MAXN],r[MAXN],num[MAXN],ans[MAXN];
+
+signed  main(){
+	ios::sync_with_stdio(false);
+	ll n,m;
+	cin >> n >> m;
+	for(ll i = 1;i<=m;++i)cin >> ord[i] >> l[i] >> r[i];
+	num[m+1] = 1;
+	for(ll i = m;i>=1;--i){
+		num[i] = (num[i]+num[i+1])%MOD;
+		if(ord[i]==1){
+			ans[l[i]] = (ans[l[i]]+num[i]) % MOD;ans[r[i]+1] = (ans[r[i]+1] - num[i] + MOD)%MOD;
+		} 
+		else{
+			num[r[i]] = (num[r[i]]+ num[i])%MOD;num[l[i]-1] = (num[l[i]-1]-num[i]+MOD)%MOD;
+		}
+	}
+	for(ll i = 1;i<=n;++i){
+		ans[i] = (ans[i]+ans[i-1])%MOD;
+		cout << ans[i] << " ";
+	}
+	return 0;
+}
