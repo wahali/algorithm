@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const ll MAXN = 1e5 + 5;
+ll a[MAXN],tem[MAXN];
+ll num =0 ;
+
+void merge(ll l,ll r){
+	//cout << num << endl;
+	if(l==r)return ;
+	ll mid = (l+r)/2;
+	merge(l,mid);
+	merge(mid+1,r);
+	ll l1 = l,l2 = mid+1,r1 = mid,r2 =r,t = l;
+	while(l1<=r1&&l2<=r2){
+	while(l1<=r1&&l2<=r2&&a[l1]<=a[l2])tem[t++] = a[l1++];
+	while(l1<=r1&&l2<=r2&&a[l2]<a[l1]){
+		num+=r1-l1+1;
+		tem[t++] = a[l2++];
+	}
+	}
+	while(l1<=r1)tem[t++] = a[l1++];
+	while(l2<=r2)tem[t++] = a[l2++];
+	for(ll i = l;i<=r;++i){
+		a[i] = tem[i];
+	}
+}
+
+signed main(){
+	ios::sync_with_stdio(false);
+	ll n,x,y;;
+	cin >> n >> x >> y;
+	for(ll i =1;i<=n;++i){
+		cin >> a[i];
+	}
+	ll cost = min(x,y);
+	merge(1,n);
+	cout << num*cost;
+	return 0;
+}
