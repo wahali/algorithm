@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 2e4 + 5;
+int a[MAXN];
+priority_queue<int,vector<int>,greater<int> > p;
+int main(){
+	int n;
+	cin >> n;
+	for(int i = 1;i<=n;++i)cin >> a[i],p.push(a[i]);
+	ll ans  =0;
+	while(p.size()>1){
+		int x,y;
+		x = p.top();p.pop();
+		y = p.top();p.pop();
+		ans+=x+y;
+		p.push(x+y);
+	}
+	cout << ans;
+	return 0;
+}
