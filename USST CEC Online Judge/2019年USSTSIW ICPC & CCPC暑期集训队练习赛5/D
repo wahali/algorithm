@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const ll MAXN = 2e1 + 5;
+int a[MAXN],MAX;
+int t,n,sum,flag,vis[MAXN];
+
+void dfs(int zu,int last,int len){
+	if(flag == 1)return ;
+	if(zu==3){
+		flag = 1;
+		return;
+	}
+	for(int i = last;i>=1;--i){
+		if(vis[i])continue;
+		if(len+a[i]>sum/4)continue;
+		vis[i] =1;
+		if(len+a[i]==sum/4)dfs(zu+1,n,0);
+		else dfs(zu,i-1,a[i]+len);
+		vis[i] =0;
+	}
+}
+
+
+signed  main(){
+	ios::sync_with_stdio(false);
+	cin >> t;
+	while(t--){
+		MAX =0,sum = 0;
+		cin >> n;
+		memset(a,0,sizeof(a));
+		for(int i = 1;i<=n;++i){
+			cin >> a[i];sum +=a[i];
+			MAX = max(MAX,a[i]);
+		}
+		if(sum%4!=0){
+			cout << "no" << endl;
+			continue;
+		}
+		if(MAX>sum/4){
+			cout << "no" << endl;
+			continue;
+		}
+		sort(a+1,a+1+n);
+		memset(vis,0,sizeof(vis));
+		flag =0;
+		dfs(0,n,0);
+		if(flag==1){
+			cout << "yes" << endl;
+		}
+		else cout << "no" << endl;
+	}
+	return 0;
+}
