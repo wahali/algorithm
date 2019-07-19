@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 2e1 + 5;
+ll a[MAXN],dp[MAXN][MAXN];
+
+int main(){
+	ios::sync_with_stdio(false);
+	int n,m;
+	for(int i = 1;i<=20;++i)dp[i][i] = 1,dp[i][1] =1;
+	for(int i = 1;i<=20;++i){
+		for(int j = 1;j<i;++j){
+			dp[i][j] = dp[i-1][j-1]+j*dp[i-1][j];
+		}
+	}
+	/*
+	for(int i = 1;i<=20;++i){
+		for(int j = 1;j<=20;++j){
+			cout << dp[i][j] << ' ';
+		}
+		cout << endl ;
+	}
+	*/
+	while(cin >> n >> m){
+		cout << dp[n][m] << endl;
+		
+	}
+	 
+	return 0;
+}
