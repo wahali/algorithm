@@ -1,0 +1,80 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 1e5 + 5;
+int a[27];
+
+int main(){
+	int n;
+	cin >> n;
+	string str;
+	cin >> str;
+	int len = str.length();
+	for(int i =0;i<str.length();++i){
+		if(str[i]=='?'&&str[len-i-1]!='?'){
+			str[i] = str[len-i-1] ;
+		}
+		else if(str[i]!='?'&&str[len-i-1]=='?'){
+			str[len-i-1] = str[i];
+		}
+	}
+	//cout << str << endl;
+	string tem = str;
+	reverse(tem.begin(),tem.end());
+	int num =0,numw =0;
+	if(tem!=str){
+		cout << "IMPOSSIBLE";
+		return 0;
+	}
+	//cout << "fgsdg" <<endl;
+	for(int i =0;i<str.length();++i){
+		if(str[i]!='?'){
+			if(!a[str[i]-'a']){
+				a[str[i]-'a'] =1;
+				num++;
+			}
+		}
+		else {
+			numw++;
+		}
+	}
+	if((numw+1)/2<n-num){
+		cout << "IMPOSSIBLE";
+		return 0;
+	}
+	//cout << num << " " << numw << endl;
+	for(int i = 0;i<str.length();++i){
+		if(numw<=0)break;
+		if(str[i]=='?'){
+			if((numw+1)/2>n-num){
+				str[i] ='a';
+				str[len-i-1] ='a';
+				numw-=2;
+				
+			}
+			else {
+				for(int j = 0;j<=n;++j){
+					if(!a[j]){
+						//cout << j << endl;
+						str[i] = 'a'+j;
+						str[len-1-i] ='a'+j;
+						a[j] =1;
+						numw-=2;
+						num++;
+						break;
+					}
+				}
+			}
+			//cout << num << " " << numw << " " << str<< endl;
+		}
+	}
+	cout << str;
+	return 0;
+}
+
+/*
+4
+a?b???b?a
+4
+a?b??ca
+*/
