@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN= 10;
+char mp[15][15];
+int vis[15][15];
+int ans[15][15];
+int MIN = 2e9;
+int a1[4]={1,-1,0,0};
+int a2[4]={0,0,1,-1};
+queue<pair<int,int> >p;
+bool is(int x,int y){
+	if(x>=1&&x<=MAXN&&y>=1&&y<=MAXN)return true;
+	else return false;
+}
+
+int main(){
+	ios::sync_with_stdio(false);
+	int sx,sy,tx,ty;
+	for(int i = 1;i<=10;++i){
+		for(int j = 1;j<=10;++j){
+			cin >> mp[i][j];
+			if(mp[i][j]=='S')sx = i,sy = j;
+			else if(mp[i][j]=='T')tx = i,ty = j;
+			ans[i][j] = 2e5;
+		}
+	}
+	ans[sx][sy] =0;
+	p.push(make_pair(sx,sy));
+	while(!p.empty()){
+		pair<int,int> tem = p.front();p.pop();
+		vis[tem.first][tem.second] = 1;
+		if(mp[tem.first][tem.second]=='L')continue;
+		for(int i = 0;i<4;++i){
+			if(is(tem.first+a1[i],tem.second+a2[i])){
+				if(vis[tem.first+a1[i]][tem.second+a2[i]])continue;
+				ans[tem.first+a1[i]][tem.second+a2[i]] = min(ans[tem.first+a1[i]][tem.second+a2[i]],ans[tem.first][tem.second]+1);
+				p.push(make_pair(tem.first+a1[i],tem.second+a2[i]));
+			}
+		}
+	}
+	cout << ans[tx][ty];
+	return 0;
+}
