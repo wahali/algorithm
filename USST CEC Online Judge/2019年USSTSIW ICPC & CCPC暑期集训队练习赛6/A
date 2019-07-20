@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN= 1e6 + 5;
+const int MOD = 1e3;
+int n = 2;
+struct MAT{
+	int m[5][5];
+};
+
+MAT multi(MAT a,MAT b){
+	MAT tem;
+	for(int i =1;i<=n;++i){
+		for(int j= 1;j<=n;++j){
+			tem.m[i][j] =0;
+			for(int k = 1;k<=n;++k){
+				tem.m[i][j] += a.m[i][k]*b.m[k][j];
+				tem.m[i][j] %= MOD;
+			}
+		}
+	}
+	return tem;
+}
+
+MAT mypow(MAT a,int t){
+	MAT tem,ans1;
+	for(int i =1;i<=n;++i)
+	for(int j=1;j<=n;++j)
+	{
+			tem.m[i][j] = a.m[i][j];
+			if(i==j)ans1.m[i][j] =1;
+			else ans1.m[i][j] = 0;
+	}
+	while(t){
+		if(t&1)ans1 = multi(tem,ans1);
+		tem = multi(tem,tem);
+		t>>=1;
+	}
+	return ans1;
+}
+int a[2][2]={{3,5},{1,3}};
+int b[2][2]={{1,0},{0,0}};
+
+int main(){
+	ios::sync_with_stdio(false);
+	MAT l,r;
+	for(int i =1;i<=n;++i){
+		for(int j=1;j<=n;++j){
+			l.m[i][j] = a[i-1][j-1];
+			r.m[i][j] = b[i-1][j-1];
+		}
+	}
+	/*
+	for(int i =1;i<=n;++i){
+		for(int j=1;j<=n;++j){
+			cout << l.m[i][j]<<"";
+			//r.m[i][j] = b[i-1][j-1];
+		}
+		cout << endl;
+	}
+	for(int i =1;i<=n;++i){
+		for(int j=1;j<=n;++j){
+			cout << r.m[i][j]<<"";
+			//r.m[i][j] = b[i-1][j-1];
+		}
+		cout << endl;
+	}
+	*/
+	int num;
+	cin >> num;
+	MAT ans;
+	ans = multi(mypow(l,num),r);
+	int fin = (2*ans.m[1][1]-1)%MOD;
+	if(fin<10)cout << "00" <<fin;
+	else if(fin<100)cout <<'0'<<fin;
+	else cout << fin;
+	return 0;
+}
