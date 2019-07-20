@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN= 1e3 + 5;
+int f[MAXN][MAXN],mp[MAXN][MAXN],sum[MAXN][MAXN],h[MAXN][MAXN],l[MAXN][MAXN];
+
+int main(){
+	ios::sync_with_stdio(false);
+	int n,m;
+	cin >> n >> m;
+	for(int i =1;i<=n;++i){
+		for(int j = 1;j<=m;++j){
+		cin >> mp[i][j];
+		}
+	}
+	for(int i = 1;i<=m;++i){
+		if(mp[1][i]==1)f[1][i] = 1;
+	}
+	for(int i = 1;i<=n;++i){
+		if(mp[i][1]==1)f[i][1] = 1;
+	}
+	/*
+	for(int i =1;i<=n;++i){
+		for(int j = 1;j<=m;++j){
+		cout << f[i][j] << ' ';
+		}
+		cout << endl;
+	}
+	*/
+	int ans =0;
+	for(int i =2;i<=n;++i){
+		for(int j = 2;j<=m;++j){
+			if(mp[i][j]==0){
+				f[i][j] = 0;
+				continue;
+			}
+			int num =2e9;
+			if(f[i-1][j-1]==0){
+				f[i][j] = 1;
+				continue;
+			}
+			int tem =0,flag =0;
+			for(int k =1;k<=f[i-1][j-1];++k){
+				if(mp[i][j-k]==0){
+					tem = k-1;
+					flag = 1;
+					break;
+				}
+			}
+			if(flag== 0)tem = f[i-1][j-1];
+			num = min(num,tem);
+			flag = 0;
+			for(int k =1;k<=f[i-1][j-1];++k){
+				if(mp[i-k][j]==0){
+					tem = k-1;
+					flag = 1;
+					break;
+				}
+			}
+			if(flag== 0)tem = f[i-1][j-1];
+			num = min(num,tem);
+			if(num!=2e9)f[i][j] = num+1;
+			ans = max(ans,f[i][j]);
+		}
+	}
+	/*
+	for(int i = 1;i<=n;++i){
+		for(int j  =1;j<=m;++j){
+			cout << f[i][j] << " ";
+		}
+		cout << endl;
+	}
+	*/
+	cout << ans ;
+	return 0;
+}
