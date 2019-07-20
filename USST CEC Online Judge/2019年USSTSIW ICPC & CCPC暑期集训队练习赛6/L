@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN= 1e6 + 5;
+ll a[MAXN][5];
+inline ll max(ll a,ll b)
+{
+	return a>b?a:b;
+}
+inline ll min(ll a,ll b){
+	return a<b?a:b;
+}
+int main(){
+	ios::sync_with_stdio(false);
+	int n,d;
+	cin >> n >> d;
+	ll ans = 0;
+	for(int i = 1;i<=n;++i){
+		for(int j = 1;j<=d;++j){
+			cin >> a[i][j];
+		}
+	}
+	int MAX= -2e9,MIN = 2e9;
+	for(int i =0;i<(1<<d);++i){
+		MAX = -2e9,MIN= 2e9;
+		int tem = i;
+		for(int j = 1;j<=n;++j){
+			int num = 0;
+			for(int k = 0;k<d;++k){
+				if(tem&(1<<k))num+=a[j][k+1];
+				else num-=a[j][k+1];
+			}
+			MAX = max(MAX,num);
+			MIN = min(MIN,num);
+			num = 0;
+		}
+		//cout << i << " " << MAX << ' ' << MIN << endl;
+		ans = max(ans,MAX-MIN);
+	}
+	cout << ans;
+	return 0;
+}
