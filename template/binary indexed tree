@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 5e5+10;
+int a[MAXN]; //原数组
+int c[MAXN]; //差分数组
+int b[MAXN]; //维护区间变化值 
+int n; //数组长度 
+void update(int x,int val,int l[]){      //单点更新 
+	for(;x<=n;x+=(x&-x))l[x]+=val;
+}
+int ask(int x,int l[]){
+	int ans =0;
+	for(x;x>=1;x-=(x&-x))ans+=l[x];
+	return ans;
+}
+
+int query_ask(int x,int y,int l[]){
+	return ask(y,l)-ask(x-1,l);
+}
+
+int main(){
+	ios::sync_with_stdio(false);
+	int m,tem;
+	cin >> n >> m;
+	for(int i = 1;i<=n;++i){
+		cin >> a[i];
+	}
+	int ord,x,y,k;
+	for(int i = 0;i<m;++i){
+		cin >> ord;
+		if(ord==1){
+			cin >> x >> y >> k;
+			update(x,k,b);
+			update(y+1,-k,b);
+		}
+		else{
+			cin >> x;
+			//cout  << ask(x,c) << " " << ask(x,b) <<endl;
+			cout << a[x]+ask(x,b) << endl;
+		}
+	}
+	return 0;
+}
