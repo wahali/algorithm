@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 1e5 + 5;
+
+
+int main(){
+	ios::sync_with_stdio(false);
+	int q;
+	cin >> q;
+	string tem="RGB";
+	while(q--){
+		int n,k;
+		cin >> n>> k;
+		string str;
+		cin >> str;
+		int cnt,ans = 1e9;
+		for(int offset = 0;offset<3;++offset){
+			vector<int> p(n);
+			cnt =0;
+			for(int i = 0;i<n;++i){
+				p[i] = (str[i]!=tem[(i+offset)%3]);
+				cnt += p[i];
+				if(i>=k)cnt -=p[i-k];
+				if(i>=k-1)ans =min(ans,cnt);	
+			}
+		}
+		cout << ans << endl;
+	}
+	return 0;
+}
