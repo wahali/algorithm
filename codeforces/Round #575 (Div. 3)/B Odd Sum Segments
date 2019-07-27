@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int MAXN = 1e5 + 5;
+queue<int> p;
+stack<int> q;
+
+int main(){
+	ios::sync_with_stdio(false);
+	int h;
+	cin >> h;
+	while(h--){
+		int n,k,tem;
+		cin >> n >> k;
+		for(int i = 1;i<=n;++i){
+			cin >> tem;
+			if(!q.empty()){
+				int t = q.top();q.pop();
+				t += tem;
+				if(t&1&&k!=1){
+					p.push(i);
+					k--;
+				}
+				else{
+					q.push(t);
+				}
+			}
+			else {
+				if(tem&1&&k!=1){
+					p.push(i);
+					k--;
+				}
+				else q.push(tem);
+			}
+		}
+		if(k!=1){
+			cout << "NO" << endl;
+		}
+		else if(k==1&&!q.empty()){
+			int t = q.top();q.pop();
+			if(!(t&1))cout << "NO" << endl;
+			else {
+				cout << "YES" << endl;
+			while(!p.empty())cout << p.front()<<" ",p.pop();
+			cout << n ;
+			cout << endl;
+			}
+		}
+		else {
+			cout << "NO" << endl;
+		}
+		while(!p.empty())p.pop();
+		while(!q.empty())q.pop();
+	}
+	
+	return 0;
+}
