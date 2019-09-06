@@ -1,1 +1,1 @@
-# algrithom
+# algorithm
